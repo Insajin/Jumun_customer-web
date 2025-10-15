@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Brand theme colors (set by ThemeProvider) */
+  --color-primary: #2563eb;
+  --color-secondary: #1e40af;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Brand color utilities */
+  .bg-brand-primary {
+    background-color: var(--color-primary);
+  }
+
+  .text-brand-primary {
+    color: var(--color-primary);
+  }
+
+  .border-brand-primary {
+    border-color: var(--color-primary);
+  }
+
+  .hover\:bg-brand-primary:hover {
+    background-color: var(--color-primary);
+  }
+
+  .bg-brand-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  /* Hide scrollbar */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
