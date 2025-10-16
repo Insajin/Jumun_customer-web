@@ -10,7 +10,7 @@ import {
 
 interface QuickMenu {
   name: string
-  href: string
+  path: string
   icon: React.ComponentType<{ className?: string }>
   color: string
 }
@@ -18,31 +18,35 @@ interface QuickMenu {
 const quickMenus: QuickMenu[] = [
   {
     name: '주문하기',
-    href: '/stores',
+    path: '/stores',
     icon: MagnifyingGlassIcon,
     color: 'bg-blue-50 text-blue-600',
   },
   {
     name: '주문내역',
-    href: '/orders',
+    path: '/orders',
     icon: ClipboardDocumentListIcon,
     color: 'bg-green-50 text-green-600',
   },
   {
     name: '쿠폰',
-    href: '/coupons',
+    path: '/coupons',
     icon: TicketIcon,
     color: 'bg-orange-50 text-orange-600',
   },
   {
     name: '포인트',
-    href: '/loyalty',
+    path: '/loyalty',
     icon: StarIcon,
     color: 'bg-purple-50 text-purple-600',
   },
 ]
 
-export function QuickMenuGrid() {
+interface QuickMenuGridProps {
+  brandSlug: string
+}
+
+export function QuickMenuGrid({ brandSlug }: QuickMenuGridProps) {
   return (
     <div className="grid grid-cols-4 gap-4">
       {quickMenus.map((menu) => {
@@ -50,7 +54,7 @@ export function QuickMenuGrid() {
         return (
           <Link
             key={menu.name}
-            href={menu.href}
+            href={`/${brandSlug}${menu.path}`}
             className="flex flex-col items-center gap-2"
           >
             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${menu.color} transition-transform hover:scale-105`}>

@@ -22,8 +22,21 @@ export interface Store {
   brand_id: string
   name: string
   address: string
+  qr_code?: string | null
   status: 'active' | 'inactive'
   operating_hours: Record<string, any>
+  created_at: string
+  updated_at: string
+}
+
+export interface Customer {
+  id: string
+  user_id: string
+  brand_id: string  // Brand isolation for white-label apps
+  phone: string | null
+  phone_verified_at: string | null
+  loyalty_points: number
+  preferences: Record<string, any>
   created_at: string
   updated_at: string
 }
