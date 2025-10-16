@@ -31,6 +31,7 @@ const STATUS_COLORS: Record<string, string> = {
 export default function OrderTrackingPage() {
   const params = useParams()
   const orderId = params.orderId as string
+  const brandSlug = params.brandSlug as string
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
@@ -112,9 +113,9 @@ export default function OrderTrackingPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-2">주문을 찾을 수 없습니다</h1>
-          <a href="/stores" className="text-blue-600 hover:underline">
+          <Link href={`/${brandSlug}/stores`} className="text-blue-600 hover:underline">
             매장 목록으로 돌아가기
-          </a>
+          </Link>
         </div>
       </div>
     )
@@ -240,13 +241,13 @@ export default function OrderTrackingPage() {
         {/* Actions */}
         <div className="flex gap-4">
           <Link
-            href="/stores"
+            href={`/${brandSlug}/stores`}
             className="flex-1 px-6 py-3 text-center border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
             매장 목록
           </Link>
           <Link
-            href="/"
+            href={`/${brandSlug}`}
             className="flex-1 px-6 py-3 text-center bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             홈으로
