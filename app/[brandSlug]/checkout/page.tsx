@@ -1,18 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useCartStore } from '@/lib/store/cart'
 import { useAuthStore } from '@/lib/store/auth'
 import { createClient } from '@/lib/supabase/client'
 import { StarIcon } from '@heroicons/react/24/solid'
 
-interface CheckoutPageProps {
-  params: { brandSlug: string }
-}
-
-export default function CheckoutPage({ params }: CheckoutPageProps) {
+export default function CheckoutPage() {
   const router = useRouter()
+  const params = useParams()
+  const brandSlug = params.brandSlug as string
   const { items, storeId, getTotal, clearCart } = useCartStore()
   const { customer, isAuthenticated, refreshCustomer } = useAuthStore()
   const supabase = createClient()
@@ -58,7 +56,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
   }, [storeId, supabase])
 
   if (items.length === 0) {
-    router.push(`/${params.brandSlug}/cart`)
+    router.push(`/${brandSlug}/cart`)
     return null
   }
 
@@ -178,7 +176,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
 
       // Clear cart and redirect to order tracking
       clearCart()
-      router.push(`/${params.brandSlug}/orders/${order.id}`)
+      router.push(`/${brandSlug}/orders/${order.id}`)
     } catch (error) {
       console.error('Error creating order:', error)
       alert('주문 생성에 실패했습니다. 다시 시도해주세요.')

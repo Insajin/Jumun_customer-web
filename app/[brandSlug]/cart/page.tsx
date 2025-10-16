@@ -2,14 +2,12 @@
 
 import Link from 'next/link'
 import { useCartStore } from '@/lib/store/cart'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 
-interface CartPageProps {
-  params: { brandSlug: string }
-}
-
-export default function CartPage({ params }: CartPageProps) {
+export default function CartPage() {
   const router = useRouter()
+  const params = useParams()
+  const brandSlug = params.brandSlug as string
   const { items, updateQuantity, removeItem, clearCart, getSubtotal, getTax, getTotal } = useCartStore()
 
   if (items.length === 0) {
@@ -20,7 +18,7 @@ export default function CartPage({ params }: CartPageProps) {
           <h1 className="text-2xl font-bold mb-2">장바구니가 비어있습니다</h1>
           <p className="text-gray-600 mb-6">메뉴를 추가해주세요</p>
           <Link
-            href={`/${params.brandSlug}/stores`}
+            href={`/${brandSlug}/stores`}
             className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             매장 찾기
@@ -152,7 +150,7 @@ export default function CartPage({ params }: CartPageProps) {
               계속 쇼핑
             </button>
             <button
-              onClick={() => router.push(`/${params.brandSlug}/checkout`)}
+              onClick={() => router.push(`/${brandSlug}/checkout`)}
               className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               data-testid="checkout-button"
             >
