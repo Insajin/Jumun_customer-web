@@ -4,12 +4,14 @@ import { BottomNav } from '@/components/layout/BottomNav'
 
 interface BrandLayoutProps {
   children: React.ReactNode
-  params: { brandSlug: string }
+  params: Promise<{ brandSlug: string }>
 }
 
-export default function BrandLayout({ children, params }: BrandLayoutProps) {
+export default async function BrandLayout({ children, params }: BrandLayoutProps) {
+  const { brandSlug } = await params
+
   return (
-    <BrandProvider brandSlug={params.brandSlug}>
+    <BrandProvider brandSlug={brandSlug}>
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -18,7 +20,7 @@ export default function BrandLayout({ children, params }: BrandLayoutProps) {
         <div className="pb-16">
           {children}
         </div>
-        <BottomNav brandSlug={params.brandSlug} />
+        <BottomNav brandSlug={brandSlug} />
       </Suspense>
     </BrandProvider>
   )
