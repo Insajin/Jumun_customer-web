@@ -2,20 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useCartStore } from '@/lib/store/cart'
 import { useBrand } from '@/lib/context/BrandContext'
 import type { Store, MenuCategory, MenuItem } from '@/lib/types'
 
-interface StoreMenuPageProps {
-  params: {
-    brandSlug: string
-    storeId: string
-  }
-}
-
-export default function StoreMenuPage({ params }: StoreMenuPageProps) {
-  const { storeId, brandSlug } = params
+export default function StoreMenuPage() {
+  const params = useParams()
+  const brandSlug = params.brandSlug as string
+  const storeId = params.storeId as string
 
   const [store, setStore] = useState<Store | null>(null)
   const [categories, setCategories] = useState<MenuCategory[]>([])

@@ -2,6 +2,7 @@
 
 import { BellIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useBrand } from '@/lib/context/BrandContext'
 import { useAuthStore } from '@/lib/store/auth'
 import { PromotionBanner } from '@/components/home/PromotionBanner'
@@ -9,11 +10,9 @@ import { QuickMenuGrid } from '@/components/home/QuickMenuGrid'
 import { RecommendedMenus } from '@/components/home/RecommendedMenus'
 import { RecentOrders } from '@/components/home/RecentOrders'
 
-interface HomePageProps {
-  params: { brandSlug: string }
-}
-
-export default function HomePage({ params }: HomePageProps) {
+export default function HomePage() {
+  const params = useParams()
+  const brandSlug = params.brandSlug as string
   const { brand } = useBrand()
   const { isAuthenticated } = useAuthStore()
 
@@ -43,7 +42,7 @@ export default function HomePage({ params }: HomePageProps) {
 
         {/* Quick Menu Grid */}
         <section>
-          <QuickMenuGrid brandSlug={params.brandSlug} />
+          <QuickMenuGrid brandSlug={brandSlug} />
         </section>
 
         {/* Recent Orders (if logged in) */}
@@ -52,7 +51,7 @@ export default function HomePage({ params }: HomePageProps) {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold">최근 주문</h2>
               <Link
-                href={`/${params.brandSlug}/orders`}
+                href={`/${brandSlug}/orders`}
                 className="text-sm text-blue-600 hover:text-blue-700"
               >
                 전체 보기 →
@@ -67,7 +66,7 @@ export default function HomePage({ params }: HomePageProps) {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold">추천 메뉴</h2>
             <Link
-              href={`/${params.brandSlug}/stores`}
+              href={`/${brandSlug}/stores`}
               className="text-sm text-blue-600 hover:text-blue-700"
             >
               더보기 →
@@ -84,7 +83,7 @@ export default function HomePage({ params }: HomePageProps) {
               포인트 적립, 쿠폰, 주문 내역 확인 등
             </p>
             <Link
-              href={`/${params.brandSlug}/profile`}
+              href={`/${brandSlug}/profile`}
               className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               로그인하기

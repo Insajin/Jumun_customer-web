@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useBrand } from '@/lib/context/BrandContext'
 import type { Store } from '@/lib/types'
 
-interface StoresPageProps {
-  params: { brandSlug: string }
-}
-
-export default function StoresPage({ params }: StoresPageProps) {
+export default function StoresPage() {
+  const params = useParams()
+  const brandSlug = params.brandSlug as string
   const [stores, setStores] = useState<Store[]>([])
   const [loading, setLoading] = useState(true)
   const { brand } = useBrand()
@@ -66,7 +65,7 @@ export default function StoresPage({ params }: StoresPageProps) {
             {stores.map((store) => (
               <Link
                 key={store.id}
-                href={`/${params.brandSlug}/stores/${store.id}/menu`}
+                href={`/${brandSlug}/stores/${store.id}/menu`}
                 data-testid={`store-card-${store.id}`}
                 className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6 border border-gray-200"
               >
@@ -84,7 +83,7 @@ export default function StoresPage({ params }: StoresPageProps) {
         )}
 
         <div className="mt-8 text-center">
-          <Link href={`/${params.brandSlug}`} className="text-blue-600 hover:underline">
+          <Link href={`/${brandSlug}`} className="text-blue-600 hover:underline">
             ← 홈으로 돌아가기
           </Link>
         </div>
